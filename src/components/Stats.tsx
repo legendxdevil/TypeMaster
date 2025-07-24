@@ -30,12 +30,25 @@ interface TestResult {
   date: Date;
 }
 
+const calculateBestAccuracy = (): number => {
+  const savedResults = localStorage.getItem('typingResults');
+  if (!savedResults) return 0;
+  try {
+    const parsedResults: { accuracy: number; date: string }[] = JSON.parse(savedResults);
+    if (!Array.isArray(parsedResults) || parsedResults.length === 0) return 0;
+    return Math.max(...parsedResults.map(r => r.accuracy));
+  } catch {
+    return 0;
+  }
+};
+
 const Stats: React.FC = () => {
   const [results, setResults] = useState<TestResult[]>([]);
   const [averageWpm, setAverageWpm] = useState<number>(0);
   const [averageAccuracy, setAverageAccuracy] = useState<number>(0);
   const [bestWpm, setBestWpm] = useState<number>(0);
-  const [bestAccuracy, setBestAccuracy] = useState<number>(0);
+  const [bestAccuracy, setBestAccuracy] = useState<number>(calculateBestAccuracy());
+  const [currentAccuracy, setCurrentAccuracy] = useState<number>(bestAccuracy);
   const [totalTests, setTotalTests] = useState<number>(0);
   const [selectedTimeRange, setSelectedTimeRange] = useState<string>('all');
 
@@ -248,6 +261,13 @@ const Stats: React.FC = () => {
                 <div className="text-sm text-gray-500 dark:text-gray-400">Average Accuracy</div>
                 <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
                   {averageAccuracy}%
+                </div>
+              </div>
+              
+              <div className="bg-white dark:bg-dark-700 p-4 rounded-lg shadow-sm">
+                <div className="text-sm text-gray-500 dark:text-gray-400">Best Accuracy</div>
+                <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                  {bestAccuracy}%
                 </div>
               </div>
             </div>
