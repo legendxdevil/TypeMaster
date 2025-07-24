@@ -48,7 +48,6 @@ const Stats: React.FC = () => {
   const [averageAccuracy, setAverageAccuracy] = useState<number>(0);
   const [bestWpm, setBestWpm] = useState<number>(0);
   const [bestAccuracy, setBestAccuracy] = useState<number>(calculateBestAccuracy());
-  const [currentAccuracy, setCurrentAccuracy] = useState<number>(bestAccuracy);
   const [totalTests, setTotalTests] = useState<number>(0);
   const [selectedTimeRange, setSelectedTimeRange] = useState<string>('all');
 

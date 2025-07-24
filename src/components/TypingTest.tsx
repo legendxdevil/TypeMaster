@@ -74,7 +74,7 @@ const TypingTest: React.FC = () => {
       
       // Calculate results
       const timeInMinutes = (end - startTime) / 60000;
-      const wordsTyped = userInput.trim().split(/\s+/).length;
+      // const wordsTyped = userInput.trim().split(/\s+/).length;
       const charactersTyped = userInput.length;
       
       // WPM calculation (standard: 5 characters = 1 word)
